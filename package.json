@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@iconify/react": "^5.2.0",
+    "@next/third-parties": "^15.1.7",
     "epubjs": "^0.3.93",
     "firebase": "^11.3.1",
     "firebase-admin": "^13.1.0",
