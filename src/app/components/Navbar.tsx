@@ -48,8 +48,12 @@ export default function Navbar() {
 
   const handleSignin = () => {
     setDropdownOpen(!dropdownOpen);
-    localStorage.setItem("prevPage", window.location.pathname);
     router.push("/auth");
+  };
+
+  const handleSubscribe = () => {
+    localStorage.setItem("prevPage", window.location.pathname);
+    router.push("/subscribe");
   };
 
   return (
@@ -64,63 +68,95 @@ export default function Navbar() {
 
       {/* Right - User Controls */}
       {loading ? (
-        <Icon icon="eos-icons:loading" width="24" height="24" className="animate-spin" />
+        <Icon
+          icon="eos-icons:loading"
+          width="24"
+          height="24"
+          className="animate-spin"
+        />
       ) : (
-      user ? (
-        <div className="relative">
-          <button
-            className="flex items-center gap-2"
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-          >
-            <img
-              src={user.photoURL || "/default-avatar.png"}
-              alt="Avatar"
-              className="w-8 h-8 rounded-full"
-            />
-            <Icon icon="mdi:chevron-down" className="text-xl" />
-          </button>
-
-          {/* Dropdown Menu */}
-          {dropdownOpen && (
-            <div
-              ref={dropdownRef}
-              className="absolute right-0 mt-2 w-48  border rounded-lg shadow-md text-sm bg-[#FFFBEF] text-[#39210C]"
+        <div className="flex flex-end gap-2">
+        {!subscription && (
+          <div className="">
+            <button
+              onClick={handleSubscribe}
+              className="flex items-center space-x-2 py-1 px-2 rounded text-white bg-[#39210C]"
             >
-              <ul className="py-2">
-                <li className="px-4 py-2 text-gray-700">{user.displayName}</li>
-                <li className="border-t"></li>
-
-                {/* Subscription Link */}
-                <li>
-                  <Link
-                    href="/subscribe"
-                    className="block px-4 py-2 hover:bg-gray-100"
+              Subscribe
+            </button>
+          </div>
+        )}
+            {user ? (
+            
+            
+    
+              <div className="relative">
+                <button
+                  className="flex items-center gap-2"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                >
+                  {user.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt="Avatar"
+                      className="w-8 h-8 rounded-full"
+                    />
+                  ) : (
+                    <Icon icon="ei:user" className="text-4xl" />
+                  )}
+    
+                  <Icon icon="mdi:chevron-down" className="text-xl" />
+                </button>
+    
+                {/* Dropdown Menu */}
+                {dropdownOpen && (
+                  <div
+                    ref={dropdownRef}
+                    className="absolute right-0 mt-2 w-48  border rounded-lg shadow-md text-sm bg-[#FFFBEF] text-[#39210C]"
                   >
-                    {subscription ? `Plan: ${subscription.plan}` : "Subscribe"}
-                  </Link>
-                </li>
-
-                <li className="border-t"></li>
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    Sign Out
-                  </button>
-                </li>
-              </ul>
+                    <ul className="py-2">
+                      <li className="px-4 py-2 text-gray-700">
+                        {user.displayName}
+                      </li>
+                      <li className="border-t"></li>
+    
+                      {/* Subscription Link */}
+                      <li>
+                        <Link
+                          href="/subscribe"
+                          className="block px-4 py-2 hover:bg-gray-100"
+                        >
+                          {subscription
+                            ? `Plan: ${subscription.plan}`
+                            : "Subscribe"}
+                        </Link>
+                      </li>
+    
+                      <li className="border-t"></li>
+                      <li>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Sign Out
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+           
+            ) : (
+              <button
+                onClick={handleSignin}
+                className="flex items-center space-x-2 py-1 px-2 rounded border border-[#39210C]"
+              >
+                Sign In
+              </button>
+            )}
             </div>
-          )}
-        </div>
-      ) : (
-        <button
-          onClick={handleSignin}
-          className="flex items-center space-x-2 py-1 px-2 rounded border border-[#39210C]"
-        >
-          Sign In
-        </button>
-      ))}
+      )}
+            
     </nav>
   );
 }
