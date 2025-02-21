@@ -59,12 +59,13 @@ export default function Navbar() {
   return (
     <nav className="flex justify-between px-8 py-4 bg-[#FFFBEF] text-[#39210C] border-b border-stone-300">
       {/* Left - Brand Name */}
-      <span
+      <div
         className="font-bold cursor-pointer"
         onClick={() => router.push("/")}
       >
         Ray&apos;s Bookshelf
-      </span>
+
+      </div>
 
       {/* Right - User Controls */}
       {loading ? (

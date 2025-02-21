@@ -18,7 +18,7 @@ const BookReaderPreview = ({ book }: { book: Book }) => {
   const [showSubscribePrompt, setShowSubscribePrompt] = useState(false);
 
 
-  const PREVIEW_LIMIT = 10; // Limit to 10 pages for free preview
+  const PREVIEW_LIMIT = 5; // Limit to 5 pages for free preview
 
   const { slug, title } = book;
   const router = useRouter();
@@ -50,7 +50,9 @@ const BookReaderPreview = ({ book }: { book: Book }) => {
               Enjoy free previews, subscribe for full access.
             </h1>
             <p className="text-lg mb-6">
-              Start from where you left off. Starts at{" "}
+                Your access ends when your current period is over, no automatic
+                charges. You decide when to renew!
+            Starts at{" "}
               <span className="font-bold">KES 60</span>.
             </p>
 

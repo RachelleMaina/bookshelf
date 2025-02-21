@@ -25,7 +25,7 @@ export default function SubscribePage() {
 
   const router = useRouter();
 
-  const { subscription,loading } = useSubscription(user?.uid || null);
+  const { subscription, loading } = useSubscription(user?.uid || null);
 
   const plans: Record<string, { price: number; label: string; save?: string }> =
     {
@@ -46,7 +46,7 @@ export default function SubscribePage() {
         const intasend = window.IntaSend({
           publicAPIKey: process.env.NEXT_PUBLIC_INTASEND_KEY,
           live: true,
-          redirect_url:"https://bookshelf-three-rho.vercel.app/subscribe"
+          redirect_url: "https://bookshelf-three-rho.vercel.app/subscribe",
         });
         setIntasendInstance(intasend);
       }
@@ -83,7 +83,6 @@ export default function SubscribePage() {
         };
         await updateSubscription(user.uid, subscription.plan);
 
- 
         // Redirect user to previous page
         const prevPage = localStorage.getItem("prevPage") || "/";
         localStorage.removeItem("prevPage");
@@ -93,11 +92,11 @@ export default function SubscribePage() {
         setIsProcessing(false);
         setError("Payment failed. Please try again.");
       });
-    
-      intasendInstance.run({
-        amount: plans[selectedPlan].price,
-        currency: "KES",
-      });
+
+    intasendInstance.run({
+      amount: plans[selectedPlan].price,
+      currency: "KES",
+    });
   }
 
   const goBack = () => {
@@ -107,10 +106,9 @@ export default function SubscribePage() {
     router.replace(prevPage);
   };
 
-
-
-  return (
-    loading ? <Loader/>:
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="p-8 bg-[#FFFBEF] text-[#39210C] rounded-lg mt-10 flex flex-col items-center">
       <div className="md:w-1/2">
         {success && subscription ? (
@@ -161,7 +159,9 @@ export default function SubscribePage() {
               Enjoy free previews, subscribe for full access.
             </h1>
             <p className="text-center mb-6">
-              Choose a plan and continue reading uninterrupted.
+              Choose a plan and continue reading uninterrupted. Your access ends
+              when your current period is over, no automatic charges. You decide
+              when to renew!
             </p>
 
             <div className="space-y-4">
